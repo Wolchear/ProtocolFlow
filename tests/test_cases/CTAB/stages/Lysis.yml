@@ -1,0 +1,59 @@
+name: "Tissue lysis"
+
+prerequisites:
+  reagents:
+    - ref: "ctab_buffer"
+    - ref: "beta_mercaptoethanol"
+    - ref: "proteinase_k"
+
+notes:
+  warnings:
+    - "Work only under the hood on this stage"
+    - "Make shure you have enought reagents and tubes"
+    - "Avoid opening several tubes on the same time. Minize cross-contamination."
+
+steps:
+  - description: "Turn on the incubator, set temeprature to 56C"
+
+  - description: "Add {ctab_buffer.amount} of CTAB buffer to each sample"
+    reagents:
+      - ref: "ctab_buffer"
+        amount:
+          value: 1200
+          max_value: 1500
+          unit: "ul"
+    notes:
+      suggestions:
+        - "The sample should be submerged and moving in the buffer."
+
+  - description: "Close the tube, mix well by inverting the tube repeatedly"
+    notes:
+      warnings:
+        - "Do not use the vortex since that can break the DNA fragments!"
+
+  - description: "Place all samples in the centrifuge. Spin down for a few seconds at room temperature to get the material down in the tube and be able to open the tubes safely without spilling droplets."
+
+  - description: "Add {beta_mercaptoethanol.amount} of B-mercaptoethanol to each tube."
+    reagents:
+      - ref: "beta_mercaptoethanol"
+        amount:
+          value: 20
+          unit: "ul"
+    notes:
+      suggestions:
+        - "Use another pair of gloves while working with B-mercaptoethanol."
+
+  - description: "Add {proteinase_k.amount} of Proteinase K to each tube"
+    reagents:
+      - ref: "proteinase_k"
+        amount:
+          value: 20
+          unit: "ul"
+
+  - description: "Mix the tubes by inverting them multiple times."
+
+  - description: "Take the tubes to the incubator and place them in the rotary plate with the rubber bands. Incubate the samples for overnight at 56C while rotating."
+    notes:
+      warnings:
+        - "Make sure all tubes are VERY WELL CLOSED before placing them on the rotating plate and before starting rotation."
+        - "Every couple of minutes, make sure the samples are mixing well ( invert a few times if not)."
