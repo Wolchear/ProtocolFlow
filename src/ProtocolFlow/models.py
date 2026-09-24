@@ -60,9 +60,7 @@ class DisplaySettings(BaseModel):
     stages_numbering: bool = False
     stage_inner_numbering: bool = False
     steps_absolute_numbering: bool = True
-    
-class FileRef(BaseModel):
-    file: str
+
 
 class Paths(BaseModel):
     reagents_path: str = ""
@@ -73,5 +71,11 @@ class ProtocolConfig(BaseModel):
     metadata: Metadata = Field(default_factory=Metadata)
     paths: Paths = Field(default_factory=Paths)
     display: DisplaySettings = Field(default_factory=DisplaySettings)
-    reagents: list[FileRef] = Field(default_factory=list)
-    stages: list[FileRef] = Field(default_factory=list)
+    reagents: list[str] = Field(default_factory=list)
+    stages: list[str] = Field(default_factory=list)
+    
+    
+class Protocol(BaseModel):
+    config: ProtocolConfig
+    reagents: list[Reagent]
+    stages: list[Stage]
