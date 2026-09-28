@@ -1,4 +1,7 @@
 import argparse
+import sys
+
+from pydantic import ValidationError
 
 from ProtocolFlow.parser import parse_protocol
 
@@ -20,7 +23,19 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    protocol = parse_protocol(args.input)
+    
+    try:
+        protocol = parse_protocol(args.input)
+
+    except ValidationError as error:
+        print("Protocol validation failed:", file=sys.stderr)
+
+        for item in error.errors():
+            message = item["msg"].removeprefix("Value error, ")
+            print(f"  - {message}", file=sys.stderr)
+
+        sys.exit(1)
+
     print(protocol)
 
 

@@ -1,4 +1,9 @@
-from pydantic import BaseModel, Field
+from pydantic import (
+    BaseModel,
+    Field,
+    model_validator
+)
+    
 
 class Notes(BaseModel):
     suggestions: list[str] = Field(default_factory=list)
@@ -49,6 +54,13 @@ class Stage(BaseModel):
     notes: Notes | None = None
     steps: list[Step]
     
+    def reagent_refs(self):
+        if self.prerequisites is not None:
+            yield from self.prerequisites.reagents
+
+        for step in self.steps:
+            yield from step.reagents
+    
 
 class Metadata(BaseModel):
     description: str | None = None
@@ -79,3 +91,17 @@ class Protocol(BaseModel):
     config: ProtocolConfig
     reagents: list[Reagent]
     stages: list[Stage]
+    
+    @model_validator(mode="after")
+    def validate_reagent_references(self):
+        reagent_ids = {reagent.id for reagent in self.reagents}
+
+        for stage in self.stages:
+            for reagent in stage.reagent_refs():
+                if reagent.ref not in reagent_ids:
+                    raise ValueError(
+                        f"Unknown reagent '{reagent.ref}' "
+                        f"in stage '{stage.name}'"
+                    )
+
+        return self
