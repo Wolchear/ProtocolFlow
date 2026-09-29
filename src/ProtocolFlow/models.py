@@ -66,18 +66,10 @@ class Metadata(BaseModel):
     description: str | None = None
     author: str | None = None
     sources: list[str] = Field(default_factory=list)
-    
-class DisplaySettings(BaseModel):
-    show_reagent_recipes: bool = False
-    stages_numbering: bool = False
-    stage_inner_numbering: bool = False
-    steps_absolute_numbering: bool = True
-
 
 class ProtocolConfig(BaseModel):
     title: str
     metadata: Metadata = Field(default_factory=Metadata)
-    display: DisplaySettings = Field(default_factory=DisplaySettings)
     reagents: list[str] = Field(default_factory=list)
     stages: list[str] = Field(default_factory=list)
     
