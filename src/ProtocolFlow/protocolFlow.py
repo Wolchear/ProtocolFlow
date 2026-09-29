@@ -4,6 +4,7 @@ import sys
 from pydantic import ValidationError
 
 from ProtocolFlow.parser import parse_protocol
+from ProtocolFlow.rendering import render_html
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -36,7 +37,7 @@ def main() -> None:
 
         sys.exit(1)
 
-    print(protocol)
+    print(render_html(protocol))
 
 
 if __name__ == "__main__":

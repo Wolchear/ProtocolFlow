@@ -1,0 +1,145 @@
+{% macro render_notes(notes) %}
+    {% if notes %}
+        {% if notes.suggestions %}
+            <div class="suggestions">
+                <p>Suggestions:</p>
+                <ul>
+                    {% for suggestion in notes.suggestions %}
+                        <li>{{ suggestion }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if notes.warnings %}
+            <div class="warnings">
+                <p>Warnings:</p>
+                <ul>
+                    {% for warning in notes.warnings %}
+                        <li>{{ warning }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
+
+{% macro render_recipe(recipe) %}
+    {% if recipe %}
+        <div class="recipe">
+            <p>
+                Final volume:
+                {{ recipe.final_volume.value }}
+                {{ recipe.final_volume.unit }}
+            </p>
+
+            {% if recipe.reagents %}
+                <p>Reagents list:</p>
+                <ul>
+                    {% for component in recipe.reagents %}
+                        <li>
+                            {{ component.name }}
+                            {{ component.amount.value }}
+                            {{ component.amount.unit }}
+
+                            {% if component.description %}
+                                — {{ component.description }}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if recipe.steps %}
+                <p>Preparation steps:</p>
+                <ol>
+                    {% for step in recipe.steps %}
+                        <li>{{ step }}</li>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+            {% if recipe.notes %}
+                {{ render_notes(recipe.notes) }}
+            {% endif %}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+
+{% macro render_reagent(reagent) %}
+    <section class="reagent">
+        <h2>{{ reagent.name }}</h2>
+
+        {{ render_recipe(reagent.recipe) }}
+        {{ render_notes(reagent.notes) }}
+    </section>
+{% endmacro %}
+
+
+{% macro render_protocol_step(step, number) %}
+    <div class="protocol-step">
+        <p>
+            <strong>{{ number }}.</strong>
+            {{ step.description }}
+        </p>
+
+        {{ render_notes(step.notes) }}
+    </div>
+{% endmacro %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ protocol.config.title }}</title>
+</head>
+
+<body>
+    <header>
+        <h1>{{ protocol.config.title }}</h1>
+
+        {% if protocol.config.metadata.author %}
+            <p>
+                Author:
+                {{ protocol.config.metadata.author }}
+            </p>
+        {% endif %}
+
+        {% if protocol.config.metadata.sources %}
+            <div class="sources">
+                <p>Sources:</p>
+                <ul>
+                    {% for source in protocol.config.metadata.sources %}
+                        <li>{{ source }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </header>
+
+    {% if protocol.reagents %}
+        <section class="reagents">
+            {% for reagent in protocol.reagents %}
+                {{ render_reagent(reagent) }}
+            {% endfor %}
+        </section>
+    {% endif %}
+
+    {% if protocol.stages %}
+        <section class="stages">
+            {% for stage in protocol.stages %}
+                <section class="stage">
+                    <h2>{{ stage.name }}</h2>
+
+                    {% for step in stage.steps %}
+                        {{ render_protocol_step(step, loop.index) }}
+                    {% endfor %}
+                </section>
+            {% endfor %}
+        </section>
+    {% endif %}
+</body>
+</html>
