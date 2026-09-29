@@ -5,6 +5,8 @@ from pydantic import BaseModel
 
 from ProtocolFlow.models import Protocol, ProtocolConfig, Reagent, Stage
 
+REAGETNS_DIR = "reagents"
+STAGES_DIR = "stages"
 
 def _load_yaml(path: Path) -> dict:
         with path.open("r", encoding="utf-8") as stream:
@@ -28,7 +30,7 @@ def parse_protocol(protocol_file: str | Path) -> Protocol:
     reagents: list[Reagent] = [
         _parse_model(
             base_dir
-            / config.paths.reagents_path
+            / REAGETNS_DIR
             / reagent_name,
             Reagent,
         )
@@ -39,7 +41,7 @@ def parse_protocol(protocol_file: str | Path) -> Protocol:
         _parse_model(
             base_dir
             / config.paths.stages_path
-            / stage_name,
+            / STAGES_DIR,
             Stage,
         )
         for stage_name in config.stages

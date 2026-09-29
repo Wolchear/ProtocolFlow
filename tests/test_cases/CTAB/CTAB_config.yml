@@ -12,10 +12,6 @@ display:
   stage_inner_numbering: false
   steps_absolute_numbering: true
 
-paths:
-  reagents_path: "reagents"
-  stages_path: "stages"
-
 reagents:
   - "B-meth.yml"
   - "CTAB_buffer.yml"
