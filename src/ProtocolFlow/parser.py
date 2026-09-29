@@ -40,8 +40,8 @@ def parse_protocol(protocol_file: str | Path) -> Protocol:
     stages: list[Stage] = [
         _parse_model(
             base_dir
-            / config.paths.stages_path
-            / STAGES_DIR,
+            / STAGES_DIR
+            / stage_name,
             Stage,
         )
         for stage_name in config.stages
