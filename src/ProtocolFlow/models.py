@@ -74,14 +74,9 @@ class DisplaySettings(BaseModel):
     steps_absolute_numbering: bool = True
 
 
-class Paths(BaseModel):
-    reagents_path: str = ""
-    stages_path: str = ""
-
 class ProtocolConfig(BaseModel):
     title: str
     metadata: Metadata = Field(default_factory=Metadata)
-    paths: Paths = Field(default_factory=Paths)
     display: DisplaySettings = Field(default_factory=DisplaySettings)
     reagents: list[str] = Field(default_factory=list)
     stages: list[str] = Field(default_factory=list)
