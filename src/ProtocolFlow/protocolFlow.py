@@ -1,5 +1,6 @@
 import argparse
 import sys
+from pathlib import Path
 
 from pydantic import ValidationError
 
@@ -9,6 +10,13 @@ from ProtocolFlow.parser import (
 )
 from ProtocolFlow.rendering import render_html
 
+DEFAULT_STYLER = (
+    Path(__file__).parent
+    / "templates"
+    / "default_styler.yml"
+)
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         prog="protocolflow",
@@ -17,16 +25,16 @@ def parse_args() -> argparse.Namespace:
 
     parser.add_argument(
         "--input", "-i",
-        type=str,
+        type=Path,
         required=True,
         help="Protocol config file."
     )
     
     parser.add_argument(
-            "--styler", "-s",
-            type=str,
-            required=True,
-            help="Render style config."
+        "--styler", "-s",
+        type=Path,
+        default=None,
+        help="Render style config."
     )
 
     return parser.parse_args()
@@ -48,9 +56,12 @@ def main() -> None:
             print(f"  - {location}: {message}", file=sys.stderr)
 
         sys.exit(1)
-        
+    
+    
+    styler_file = args.styler or DEFAULT_STYLER
+       
     try:
-        styler = parce_styler(args.styler)
+        styler = parce_styler(styler_file)
 
     except ValidationError as error:
         print("Styler validation failed:", file=sys.stderr)
