@@ -12,14 +12,17 @@ The main goal is to keep the protocol itself separate from its presentation. Rea
 - Warnings and suggestions can be attached to reagents, recipes, stages, and individual steps.
 - Validation is performed using Pydantic models.
 - Optional Styler configuration controls which protocol components are displayed.
-- Multiple output formats are supported:
-  - HTML
-  - PDF
-  - DOCX
+- Multiple output formats are supported.
 
-PDF output is intended for stable protocol versions and printing, while DOCX can be used as an editable or collaborative version.
+## Output formats
 
-## Instalation
+- HTML: A standalone HTML document with embedded CSS.
+- PDF: A print-ready PDF document rendered from HTML using WeasyPrint.
+- DOCX: A simple editable document containing protocol metadata, reagents, recipes, notes, stages, and protocol steps.
+
+> DOCX output is intended primarily for collaborative editing rather than reproducing the visual appearance of the PDF.
+
+## Installation
 
 ```bash
 git clone https://github.com/Wolchear/ProtocolFlow.git
@@ -40,17 +43,10 @@ A custom Styler can be provided:
 protocolFlow \
   -i path/to/protocol_config.yml \
   --styler path/to/styler.yml \
-  --format html(default)|pdf|docx
+  --format html(default)|pdf|docx \
   -o output/path/file_name
 ```
-
-## Output formats
-
-- HTML: A standalone HTML document with embedded CSS.
-- PDF: A print-ready PDF document rendered from HTML using WeasyPrint.
-- DOCX: A simple editable document containing protocol metadata, reagents, recipes, notes, stages, and protocol steps.
-
-> DOCX output is intended primarily for collaborative editing rather than reproducing the visual appearance of the PDF.
+> The output file extension is added automatically according to the selected format.
 
 ## Configuration format
 For a detailed description of the configuration format, see the
