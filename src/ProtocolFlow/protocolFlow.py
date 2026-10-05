@@ -8,7 +8,8 @@ from ProtocolFlow.parser import (
     parse_protocol,
     parce_styler
 )
-from ProtocolFlow.rendering import render_html
+from ProtocolFlow.renderer import render
+from ProtocolFlow.enums import OutputFormat
 
 DEFAULT_STYLER = (
     Path(__file__).parent
@@ -35,6 +36,21 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=None,
         help="Render style config."
+    )
+    
+    parser.add_argument(
+        "--format",
+        type=OutputFormat,
+        choices=OutputFormat,
+        default=OutputFormat.HTML,
+        help="Specify output format."
+    )
+    
+    parser.add_argument(
+        "--output","-o",
+        type=Path,
+        required=True,
+        help="Specify output file name."
     )
 
     return parser.parse_args()
@@ -74,8 +90,12 @@ def main() -> None:
 
         sys.exit(1)
 
-    print(render_html(protocol, styler))
-
+    render(
+        protocol,
+        styler,
+        args.format,
+        args.output
+    )
 
 if __name__ == "__main__":
     main()
