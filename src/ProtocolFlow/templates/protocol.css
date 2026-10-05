@@ -1,0 +1,307 @@
+/* =========================================================
+   Page
+   ========================================================= */
+
+@page {
+    size: A4;
+    margin: 18mm 18mm 20mm 18mm;
+
+    @bottom-center {
+        content: "Page " counter(page) " of " counter(pages);
+        font-size: 8pt;
+        color: #777;
+    }
+}
+
+
+/* =========================================================
+   Base typography
+   ========================================================= */
+
+html {
+    font-family:
+        "DejaVu Sans",
+        "Liberation Sans",
+        Arial,
+        sans-serif;
+
+    font-size: 10.5pt;
+    color: #222;
+}
+
+body {
+    margin: 0;
+    line-height: 1.45;
+}
+
+p {
+    margin: 0.35em 0 0.65em;
+}
+
+ul,
+ol {
+    margin-top: 0.35em;
+    margin-bottom: 0.8em;
+    padding-left: 1.6em;
+}
+
+li {
+    margin-bottom: 0.25em;
+}
+
+
+/* =========================================================
+   Document header
+   ========================================================= */
+
+header {
+    margin-bottom: 2em;
+    padding-bottom: 1em;
+    border-bottom: 2px solid #2f4858;
+}
+
+header h1 {
+    margin: 0 0 0.55em;
+    font-size: 22pt;
+    line-height: 1.15;
+    color: #1f3440;
+}
+
+header > p {
+    color: #555;
+    font-size: 9.5pt;
+}
+
+
+/* =========================================================
+   Sources
+   ========================================================= */
+
+.sources {
+    margin-top: 1em;
+    padding: 0.7em 1em;
+
+    background: #f5f6f7;
+    border-left: 3px solid #89949b;
+}
+
+.sources > p {
+    margin-top: 0;
+    margin-bottom: 0.35em;
+    font-weight: 600;
+}
+
+.sources ul {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   Main sections
+   ========================================================= */
+
+.reagent {
+    margin-bottom: 0.8em;
+    padding: 0.6em 0.8em;
+
+    border: 1px solid #d9dfe3;
+    border-radius: 5px;
+    background: #fafbfb;
+
+    break-inside: auto;
+}
+
+.reagent h2 {
+    margin: 0 0 0.45em;
+    font-size: 12.5pt;
+    line-height: 1.15;
+
+    break-after: avoid;
+}
+
+.reagent p,
+.reagent li {
+    font-size: 9.5pt;
+}
+
+.reagent ul,
+.reagent ol {
+    margin-top: 0.2em;
+    margin-bottom: 0.4em;
+}
+
+.reagent li {
+    margin-bottom: 0.1em;
+}
+
+.reagent .suggestions,
+.reagent .warnings {
+    margin: 0.45em 0;
+    padding: 0.45em 0.7em;
+}
+
+.reagent .suggestions > p,
+.reagent .warnings > p {
+    margin-bottom: 0.2em;
+}
+
+.reagent .suggestions ul,
+.reagent .warnings ul {
+    margin-top: 0.15em;
+    margin-bottom: 0;
+}
+
+.stages {
+    margin-top: 1.5em;
+}
+
+
+.stage {
+    margin-bottom: 1.6em;
+}
+
+.stage h2 {
+    margin: 0 0 0.8em;
+
+    font-size: 15pt;
+    line-height: 1.2;
+
+    color: #274653;
+}
+
+.stage {
+    margin-top: 2em;
+}
+
+.stage > h2 {
+    padding-bottom: 0.35em;
+    border-bottom: 1.5px solid #b8c4ca;
+}
+
+
+/* =========================================================
+   Recipe
+   ========================================================= */
+
+.recipe {
+    margin: 0.8em 0 1em;
+    padding: 0.8em 1em;
+
+    background: #ffffff;
+
+    border-left: 4px solid #4d7c8a;
+    border-radius: 4px;
+}
+
+.recipe > p:first-child {
+    margin-top: 0;
+}
+
+.recipe > p {
+    font-weight: 500;
+}
+
+.recipe ul,
+.recipe ol {
+    margin-bottom: 0.7em;
+}
+
+
+/* =========================================================
+   Protocol steps
+   ========================================================= */
+
+.protocol-step {
+    position: relative;
+
+    margin: 0 0 0.75em;
+    padding: 0.75em 0.9em;
+
+    background: #f8f9fa;
+
+    border-left: 3px solid #78909c;
+    border-radius: 3px;
+
+    break-inside: avoid;
+}
+
+.protocol-step > p {
+    margin: 0;
+}
+
+.protocol-step strong {
+    color: #274653;
+}
+
+
+/* =========================================================
+   Notes
+   ========================================================= */
+
+.suggestions,
+.warnings {
+    margin: 0.8em 0;
+    padding: 0.7em 0.9em;
+
+    border-radius: 4px;
+
+    break-inside: avoid;
+}
+
+.suggestions > p,
+.warnings > p {
+    margin: 0 0 0.35em;
+    font-weight: 700;
+}
+
+.suggestions ul,
+.warnings ul {
+    margin-top: 0.25em;
+    margin-bottom: 0;
+}
+
+
+/* Suggestions */
+
+.suggestions {
+    background: #eef6f8;
+    border-left: 4px solid #4d8391;
+}
+
+.suggestions > p {
+    color: #315c67;
+}
+
+
+/* Warnings */
+
+.warnings {
+    background: #fff2f0;
+    border-left: 4px solid #b94a48;
+}
+
+.warnings > p {
+    color: #8f3533;
+}
+
+
+/* =========================================================
+   Printing / pagination
+   ========================================================= */
+
+h1,
+h2 {
+    break-after: avoid;
+}
+
+h2 + * {
+    break-before: avoid;
+}
+
+.recipe,
+.protocol-step,
+.suggestions,
+.warnings {
+    orphans: 3;
+    widows: 3;
+}
