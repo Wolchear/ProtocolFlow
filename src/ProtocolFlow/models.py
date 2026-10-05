@@ -70,8 +70,8 @@ class Metadata(BaseModel):
 class ProtocolConfig(BaseModel):
     title: str
     metadata: Metadata = Field(default_factory=Metadata)
-    reagents: list[str] = Field(default_factory=list)
-    stages: list[str] = Field(default_factory=list)
+    reagents: list[str]
+    stages: list[str]
     
     
 class Protocol(BaseModel):

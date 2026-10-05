@@ -1,0 +1,28 @@
+id: example_reagent_2_id # required
+name: "example_reagent_2" # required
+
+recipe:
+  final_volume:
+    value: 500 # required
+    unit: "ml" # required
+
+  reagents: # reagents list is not required
+    - name: "prep_reg_1" # required if reagents list exist
+      amount: # required if reagents list exist
+        value: 10 # required if reagents list exist
+        unit: "g" # required if reagents list exist
+      description: "Reg description" # not required
+
+    - name: "prep_reg_2"
+      amount:
+        value: 5
+        unit: "g"
+
+  steps: # required
+    - "dissolve reg_1"
+    - "dissolve reg_2"
+    
+  
+  notes: # not required
+    suggestions:
+      - "recipe suggestions"

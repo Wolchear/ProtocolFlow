@@ -1,0 +1,9 @@
+id: example_reagent_1_id # required
+name: "example_reagent_1" # required
+description: "Description" # not required
+notes: # all field are not required
+  suggestions:
+    - "Some suggestions"
+  warnings:
+    - "Some"
+    - "warnings"

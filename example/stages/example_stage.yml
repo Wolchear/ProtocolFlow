@@ -1,0 +1,25 @@
+name: "Tissue lysis" # required
+
+prerequisites: # not required
+  reagents:
+    - ref: "example_reagent_1_id"
+    - ref: "example_reagent_2_id"
+
+notes: # all field are not not required
+  warnings:
+    - "Some warning"
+  suggestions:
+    - "Some suggestions"
+
+steps: # required
+  - description: "First step" # required
+
+  - description: "Second step"
+    notes: # all filed are not required
+      suggestions:
+        - "Some suggestions about second step."
+
+  - description: "Third step"
+    notes: # all filed are not required
+      warnings:
+        - "Some warnings about second step"

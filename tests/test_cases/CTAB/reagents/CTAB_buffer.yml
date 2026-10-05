@@ -12,7 +12,7 @@ recipe:
       amount:
         value: 10
         unit: "g"
-      description: null
+      description: "Bla bla bla Bla bla blaBla bla blaBla bla blaBla bla blaBla bla blaBla bla blaBla bla blaBla bla blaBla bla blaBla bla blaBla bla blaBla bla blaBla bla blaBla bla blaBla bla blaBla bla bla"
 
     - name: "NaCl"
       amount:

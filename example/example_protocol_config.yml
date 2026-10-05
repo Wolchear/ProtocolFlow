@@ -1,0 +1,14 @@
+title: "This is Title" # required
+metadata: # all field are not required
+  description: "Description of the protocol"
+  author: "Wolchear"
+  sources:
+    - "This is source 1"
+    - "This is source 2 with some coments"
+
+reagents: # required
+  - "example_reagent_1.yml"
+  - "example_reagent_2.yml"
+
+stages: # required
+  - "example_stage.yml"
