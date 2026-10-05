@@ -3,7 +3,13 @@ from pathlib import Path
 import yaml
 from pydantic import BaseModel
 
-from ProtocolFlow.models import Protocol, ProtocolConfig, Reagent, Stage
+from ProtocolFlow.models import (
+    Protocol,
+    ProtocolConfig,
+    Reagent,
+    Stage,
+    Styler
+)
 
 REAGETNS_DIR = "reagents"
 STAGES_DIR = "stages"
@@ -51,4 +57,12 @@ def parse_protocol(protocol_file: str | Path) -> Protocol:
         config=config,
         reagents=reagents,
         stages=stages,
+    )
+    
+    
+def parce_styler(styler_file: str | Path) -> Styler:
+
+    return _parse_model(
+        Path(styler_file),
+        Styler,
     )

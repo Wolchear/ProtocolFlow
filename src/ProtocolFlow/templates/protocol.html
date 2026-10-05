@@ -1,31 +1,34 @@
-{% macro render_notes(notes) %}
+{% macro render_notes(notes, styler) %}
     {% if notes %}
-        {% if notes.suggestions %}
-            <div class="suggestions">
-                <p>Suggestions:</p>
-                <ul>
-                    {% for suggestion in notes.suggestions %}
-                        <li>{{ suggestion }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
+        {% if styler.show_suggestions %}
+            {% if notes.suggestions %}
+                <div class="suggestions">
+                    <p>Suggestions:</p>
+                    <ul>
+                        {% for suggestion in notes.suggestions %}
+                            <li>{{ suggestion }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
         {% endif %}
-
-        {% if notes.warnings %}
-            <div class="warnings">
-                <p>Warnings:</p>
-                <ul>
-                    {% for warning in notes.warnings %}
-                        <li>{{ warning }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
+        {% if styler.show_warnings %}
+            {% if notes.warnings %}
+                <div class="warnings">
+                    <p>Warnings:</p>
+                    <ul>
+                        {% for warning in notes.warnings %}
+                            <li>{{ warning }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
         {% endif %}
     {% endif %}
 {% endmacro %}
 
 
-{% macro render_recipe(recipe) %}
+{% macro render_recipe(recipe, styler) %}
     {% if recipe %}
         <div class="recipe">
             <p>
@@ -33,7 +36,6 @@
                 {{ recipe.final_volume.value }}
                 {{ recipe.final_volume.unit }}
             </p>
-
             {% if recipe.reagents %}
                 <p>Reagents list:</p>
                 <ul>
@@ -61,31 +63,32 @@
             {% endif %}
 
             {% if recipe.notes %}
-                {{ render_notes(recipe.notes) }}
+                {{ render_notes(recipe.notes, styler) }}
             {% endif %}
         </div>
     {% endif %}
 {% endmacro %}
 
 
-{% macro render_reagent(reagent) %}
+{% macro render_reagent(reagent, styler) %}
     <section class="reagent">
         <h2>{{ reagent.name }}</h2>
-
-        {{ render_recipe(reagent.recipe) }}
-        {{ render_notes(reagent.notes) }}
+        {% if styler.show_recipe %}
+            {{ render_recipe(reagent.recipe, styler.notes_style) }}
+        {% endif %}
+        {{ render_notes(reagent.notes, styler.notes_style) }}
     </section>
 {% endmacro %}
 
 
-{% macro render_protocol_step(step, number) %}
+{% macro render_protocol_step(step, number, styler) %}
     <div class="protocol-step">
         <p>
             <strong>{{ number }}.</strong>
             {{ step.description }}
         </p>
 
-        {{ render_notes(step.notes) }}
+        {{ render_notes(step.notes, styler.notes_style) }}
     </div>
 {% endmacro %}
 
@@ -123,7 +126,7 @@
     {% if protocol.reagents %}
         <section class="reagents">
             {% for reagent in protocol.reagents %}
-                {{ render_reagent(reagent) }}
+                {{ render_reagent(reagent, styler.reagent_style) }}
             {% endfor %}
         </section>
     {% endif %}
@@ -135,7 +138,7 @@
                     <h2>{{ stage.name }}</h2>
 
                     {% for step in stage.steps %}
-                        {{ render_protocol_step(step, loop.index) }}
+                        {{ render_protocol_step(step, loop.index, styler.stage_style) }}
                     {% endfor %}
                 </section>
             {% endfor %}

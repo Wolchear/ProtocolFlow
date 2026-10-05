@@ -1,14 +1,15 @@
 from jinja2 import Environment, PackageLoader
 
-from ProtocolFlow.models import Protocol
+from ProtocolFlow.models import Protocol, Styler
 
 env = Environment(
     loader=PackageLoader("ProtocolFlow", "templates")
 )
 
-def render_html(protocol: Protocol) -> str:
+def render_html(protocol: Protocol, styler: Styler) -> str:
     template = env.get_template("protocol.html")
 
     return template.render(
-        protocol=protocol
+        protocol=protocol,
+        styler = styler
     )

@@ -92,3 +92,18 @@ class Protocol(BaseModel):
                     )
 
         return self
+
+class NoteStyle(BaseModel):
+    show_warnings: bool
+    show_suggestions: bool
+
+class ReagentStyle(BaseModel):
+    notes_style: NoteStyle
+    show_recipe: bool
+    
+class StageStyle(BaseModel):
+    notes_style: NoteStyle
+
+class Styler(BaseModel):
+    reagent_style: ReagentStyle
+    stage_style: StageStyle

@@ -3,7 +3,10 @@ import sys
 
 from pydantic import ValidationError
 
-from ProtocolFlow.parser import parse_protocol
+from ProtocolFlow.parser import (
+    parse_protocol,
+    parce_styler
+)
 from ProtocolFlow.rendering import render_html
 
 def parse_args() -> argparse.Namespace:
@@ -17,6 +20,13 @@ def parse_args() -> argparse.Namespace:
         type=str,
         required=True,
         help="Protocol config file."
+    )
+    
+    parser.add_argument(
+            "--styler", "-s",
+            type=str,
+            required=True,
+            help="Render style config."
     )
 
     return parser.parse_args()
@@ -32,12 +42,28 @@ def main() -> None:
         print("Protocol validation failed:", file=sys.stderr)
 
         for item in error.errors():
+            location = " -> ".join(str(part) for part in item["loc"])
             message = item["msg"].removeprefix("Value error, ")
-            print(f"  - {message}", file=sys.stderr)
+
+            print(f"  - {location}: {message}", file=sys.stderr)
+
+        sys.exit(1)
+        
+    try:
+        styler = parce_styler(args.styler)
+
+    except ValidationError as error:
+        print("Styler validation failed:", file=sys.stderr)
+
+        for item in error.errors():
+            location = " -> ".join(str(part) for part in item["loc"])
+            message = item["msg"].removeprefix("Value error, ")
+
+            print(f"  - {location}: {message}", file=sys.stderr)
 
         sys.exit(1)
 
-    print(render_html(protocol))
+    print(render_html(protocol, styler))
 
 
 if __name__ == "__main__":
