@@ -149,9 +149,7 @@ reagent_style:
   notes_style:
     show_warnings: true
     show_suggestions: true
-
   show_recipe: true
-
 
 stage_style:
   notes_style:
