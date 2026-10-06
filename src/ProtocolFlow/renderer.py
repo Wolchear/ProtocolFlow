@@ -95,10 +95,14 @@ def render_docx(
 
     if protocol.stages:
         document.add_heading("Protocol", level=1)
-
+        
         for stage in protocol.stages:
             document.add_heading(stage.name, level=2)
-
+            render_notes_docx(
+                document,
+                stage.notes,
+                styler.stage_style.notes_style,
+            )
             for number, step in enumerate(stage.steps, start=1):
                 document.add_paragraph(
                     f"{number}. {step.description}"

@@ -140,7 +140,9 @@
             {% for stage in protocol.stages %}
                 <section class="stage">
                     <h2>{{ stage.name }}</h2>
-
+                    {% if stage.notes %}
+                        {{render_notes(stage.notes, styler.stage_style.notes_style)}}
+                    {% endif %}
                     {% for step in stage.steps %}
                         {{ render_protocol_step(step, loop.index, styler.stage_style) }}
                     {% endfor %}
